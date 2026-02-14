@@ -13,7 +13,7 @@ resource "aws_vpc_peering_connection" "peering" {
 }
 
 #count is useful to control when resource should be created or not. here we are creating peering connection resource only when is_peering_required variable is true. if its false then count will be 0 and resource will not be created.
-# ROUTES of public route table
+# ROUTES of public route
 ## if count is set by defaukt its 0 so we can accces through index 0
 resource "aws_route" "public_route-peering" {
   count                     = var.is_peering_required && var.acceptor_vpc_id == "" ? 1 : 0
@@ -22,7 +22,7 @@ resource "aws_route" "public_route-peering" {
   vpc_peering_connection_id = aws_vpc_peering_connection.peering[0].id
 }
 
-# ROUTES of private route table
+# ROUTES of private route 
 resource "aws_route" "private_route_peering" {
   count                     = var.is_peering_required && var.acceptor_vpc_id == "" ? 1 : 0
   route_table_id            = aws_route_table.private.id
@@ -30,7 +30,7 @@ resource "aws_route" "private_route_peering" {
   vpc_peering_connection_id = aws_vpc_peering_connection.peering[0].id
 }
 
-# ROUTES of database route table
+# ROUTES of database route 
 resource "aws_route" "database_route_peering" {
   count                     = var.is_peering_required && var.acceptor_vpc_id == "" ? 1 : 0
   route_table_id            = aws_route_table.database.id

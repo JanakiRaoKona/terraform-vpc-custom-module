@@ -83,6 +83,9 @@ resource "aws_subnet" "database" {
 # aws elastic ip resource for nat gateway
 resource "aws_eip" "nat" {
   domain = "vpc"
+  tags = {
+    Name = "${local.resource_name}"
+  }
 }
 
 # nat gateway resource
